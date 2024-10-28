@@ -31,9 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   dash_shield:
-      path: /Users/turndigital/Desktop/tdapps/flutter_dash_shield_plugin
-  flutter_prevent_screenshot: ^0.0.1+15
-  screen_protector: ^1.4.2+1
+      path: E:\plugin_folder\dash_shield
+
 #  dash_shield:
 #    git:
 #      url: https://github.com/Ahmad-Ayman/flutter_dash_shield_plugin.git

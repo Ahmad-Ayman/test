@@ -1,57 +1,53 @@
-import 'dart:developer';
-
+import 'package:flutter/foundation.dart';
 import 'package:dash_shield/dash_shield.dart';
 import 'package:dashtest/test2.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_prevent_screenshot/disablescreenshot.dart';
-import 'package:screen_protector/screen_protector.dart';
 
 import 'api_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // DashShield.preventScreenshotsGlobally();
-  // final securityConfig = SecurityConfig(
-  //   androidSigningSHA256Hashes: [
-  //     '25:54:B1:7D:51:6E:AA:24:69:B3:AA:6A:80:74:CC:0C:3F:1F:BB:03:F8:E9:DD:E6:2B:EB:02:AB:C0:AE:2B:24',
-  //   ],
-  //   androidPackageName: 'com.example.dashtest',
-  //   iosBundleIds: ['com.example.dashtest'],
-  //   iosTeamId: 'TEAMID',
-  //   watcherEmail: 'security@example.com',
-  //   enableOnAndroid: true,
-  //   enableOniOS: true,
-  //   isProduction: true,
-  //
-  //   checksToEnable: [
-  //     // SecOnControlsToApply.debug,
-  //     SecOnControlsToApply.devMode,
-  //     SecOnControlsToApply.obfuscationIssues
-  //   ],
-  //
-  //   // generalAction: (issue) => print('General Action Triggered: $issue'),
-  //   specificActions: {
-  //     SecOnControlsToApply.debug: (issue) =>
-  //         print('installed from unofficial store check failed: $issue'),
-  //     SecOnControlsToApply.obfuscationIssues: (issue) =>
-  //         log('trying another function for  : ${issue}'),
-  //   },
-  // );
-  // DashShield.initSecurity(config: securityConfig);
+  DashShield.preventScreenshotsGlobally();
+  final securityConfig = SecurityConfig(
+    androidSigningSHA256Hashes: [
+      '25:54:B1:7D:51:6E:AA:24:69:B3:AA:6A:80:74:CC:0C:3F:1F:BB:03:F8:E9:DD:E6:2B:EB:02:AB:C0:AE:2B:24',
+    ],
+    androidPackageName: 'com.example.dashtest',
+    iosBundleIds: ['com.example.dashtest'],
+    iosTeamId: 'TEAMID',
+    watcherEmail: 'security@example.com',
+    enableOnAndroid: true,
+    enableOniOS: true,
+    isProduction: true,
+    checksToEnable: [
+      // SecOnControlsToApply.debug,
+      SecOnControlsToApply.devMode,
+      SecOnControlsToApply.obfuscationIssues,
+      SecOnControlsToApply.debug,
+    ],
+    specificActions: {
+      SecOnControlsToApply.devMode: (issue) {
+if (kDebugMode) {
+}
+      },
+      SecOnControlsToApply.obfuscationIssues: (issue) {
+if (kDebugMode) {
+}
+      },
+    },
+  );
+  DashShield.initSecurity(config: securityConfig);
   // await applySecurityControlsExample();
   // final _flutterPreventScreenshot = FlutterPreventScreenshot.instance;
   // final result = await _flutterPreventScreenshot.screenshotOff();
   // if (kDebugMode) {
   //   print(result);
   // }
-  await ScreenProtector.preventScreenshotOn();
+  // await ScreenProtector.preventScreenshotOn();
   // await ScreenProtector.protectDataLeakageWithColorOff();
 
   runApp(const MyApp());
 }
-
-applySecurityControlsExample() async {}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -59,9 +55,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    DashShield.initialize(
-        context); // Initialize the DashShield plugin with context
-
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -69,11 +62,28 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       builder: (context, child) {
-        return SecurityOverlay(
-          child: child!,
-          overlayText: 'Your Custom Text',
-          overlayColor: Colors.black.withOpacity(0.8),
-        );
+        return DashShieldOverlay(
+            overlayWidget: Container(
+              color: Colors.teal,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't Sneak",
+                    style: TextStyle(fontSize: 30, color: Colors.white),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Icon(
+                    Icons.no_accounts,
+                    size: 100,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+            child: child!);
       },
       home: const MyHomePage(title: 'Dash Shield Demo'),
     );
@@ -94,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //https://cat-fact.herokuapp.com/facts
     //https://fakestoreapi.com/products
     final respo = await ApiServiceDio.getInstance()
-        .get('https://cat-fact.herokuapp.com/facts');
+        .get('https://fakestoreapi.com/products');
   }
 
   @override
@@ -102,7 +112,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO: implement initState
     super.initState();
     // Secure the entire app from screen capture
-    DashShield.secureApp();
   }
 
   @override
@@ -118,12 +127,12 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
                 onPressed: () {
-                  // DashShield.allowScreenshotsGlobally();
+                  DashShield.allowScreenshotsGlobally();
                 },
                 child: Text('Press to allow screenshot')),
             ElevatedButton(
                 onPressed: () {
-                  // DashShield.preventScreenshotsGlobally();
+                  DashShield.preventScreenshotsGlobally();
                 },
                 child: Text('Press to disable screenshot')),
             ElevatedButton(
