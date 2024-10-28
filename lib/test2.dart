@@ -12,22 +12,23 @@ class Step2 extends StatefulWidget {
 class _Step2State extends State<Step2> {
   @override
   void initState() {
-    DashShield.preventScreenshotsAndRecording();
+    // Secure only this screen from screen capture
+    DashShield.secureScreen("ProtectedScreen");
     super.initState();
   }
 
   @override
   void dispose() {
-    DashShield.allowScreenshots(); // Allow screenshots when leaving this screen
+    // DashShield.allowScreenshots(); // Allow screenshots when leaving this screen
     super.dispose();
   }
 
   @override
   void deactivate() {
-if (kDebugMode) {
-  print('asda');
-}
-    DashShield.allowScreenshots(); // Allow screenshots when leaving this screen
+    if (kDebugMode) {
+      print('asda');
+    }
+    // DashShield.allowScreenshots(); // Allow screenshots when leaving this screen
     super.deactivate();
   }
 

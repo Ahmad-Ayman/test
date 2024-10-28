@@ -121,8 +121,8 @@ packages:
   dash_shield:
     dependency: "direct main"
     description:
-      path: "D:\\DeVo\\TD\\plugin\\dash_shield"
-      relative: false
+      path: "../flutter_dash_shield_plugin"
+      relative: true
     source: path
     version: "0.0.1"
   dio:
@@ -194,6 +194,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.23"
+  flutter_prevent_screenshot:
+    dependency: "direct main"
+    description:
+      name: flutter_prevent_screenshot
+      sha256: f2f1a9f8cc9f4599454c17c186ab71d9595ef4606c5954c66be67110bec0a925
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1+15"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -396,6 +404,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  screen_protector:
+    dependency: "direct main"
+    description:
+      name: screen_protector
+      sha256: "305fd157f6f0b210afe216e790022bfe469c3b1d1f2e0d3dcc5906cc9c49c3e9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.2+1"
   sky_engine:
     dependency: transitive
     description: flutter
